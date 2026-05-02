@@ -6,7 +6,7 @@ require("dotenv").config();
 const app = express();
 
 app.use(cors({
-	origin: "http://localhost:5173",
+	origin: ["http://localhost:5173", "https://intern-tracker-rosy.vercel.app"],
 	methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 	allowedHeaders: ["Content-Type", "user-email"]
 }));
@@ -60,15 +60,15 @@ app.post("/register", async (req, res) => {
 		}
 
 		await usersCollection.insertOne({ name, email, password, createdAt: new Date() });
-		
-		await profilesCollection.insertOne({ 
-			userEmail: email, 
-			name, 
-			email, 
-			phone: "", 
-			college: "", 
-			title: "", 
-			updatedAt: new Date() 
+
+		await profilesCollection.insertOne({
+			userEmail: email,
+			name,
+			email,
+			phone: "",
+			college: "",
+			title: "",
+			updatedAt: new Date()
 		});
 
 		res.json({ message: "Registration successful" });
